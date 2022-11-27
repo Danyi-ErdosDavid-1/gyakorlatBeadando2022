@@ -1,0 +1,2 @@
+# gyakorlatBeadando2022
+ 
