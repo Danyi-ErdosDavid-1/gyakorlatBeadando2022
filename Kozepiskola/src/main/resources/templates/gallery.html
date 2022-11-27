@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
   <title>User Gallery</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<div th:insert="welcometext"></div>
+<h1 style="text-align: center">Aki nem Admin, de bejelentkezett felhasználó, csak az láthatja ezt az oldalt.</h1>
+<div style="background:yellow;padding:5px">
+  <h4 style="text-align:center">A megbízhatóság nálunk kezdődik...</h4>
+</div>
+<div class="header">
+  <h1>GALÉRIA</h1>
+  <p>Hivatásunk a <b>kényelem</b>. Nézzen szét nálunk!</p>
+</div>
 <div th:insert="menu"></div>
-<h1>Csak user láthatja ezt az oldalt.</h1>
+
+<!-- The flexible grid (content) -->
+<div class="row">
+    <ul>
+        <li>
+            <img src="/images/1.jpg">
+        </li>
+        <li>
+            <img src="/images/2.jpg">
+        </li>
+        <li>
+            <img src="/images/3.jpg">
+        </li>
+        <li>
+            <img src="/images/4.jpg">
+        </li>
+        <li>
+            <img src="/images/5.jpg">
+        </li>
+        <li>
+            <img src="/images/6.jpg">
+        </li>
+        <li>
+            <img src="/images/7.jpg">
+        </li>
+        <li>
+            <img src="/images/8.jpg">
+        </li>
+        <li>
+            <img src="/images/9.jpg">
+        </li>
+  </ul>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <h2>&copy; Copyright 2022 MIMIX Bútoráruház</h2>
+</div>
 </body>
 </html>

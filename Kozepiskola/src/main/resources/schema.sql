@@ -18,7 +18,5 @@ CREATE TABLE user_role (user_id int(11) PRIMARY KEY, role_id int(11) UNIQUE NOT 
 
 INSERT INTO user_role (user_id, role_id) VALUES
 (1, 1),
-(1, 2),
-(1, 3),
 (2, 2);
 

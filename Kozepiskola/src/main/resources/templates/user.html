@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
   <title>User Home</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  <div th:insert="welcometext"></div>
+  <h1 style="text-align: center">Csak bejelentkezett felhasználó láthatja ezt az oldalt.</h1>
+
+  <!-- Note -->
+  <div style="background:yellow;padding:5px">
+    <h4 style="text-align:center">Ön a legjobb döntést hozta, hogy benézett hozzánk!</h4>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Főoldal</h1>
+    <p>Isten hozta köreinkben a <b>MIMIX Bútoráruház</b> weblapján!</p>
+  </div>
+
+  <!-- Navigation Bar -->
   <div th:insert="menu"></div>
-  <h1>Csak bejelentkezett felhasználó láthatja ezt az oldalt.</h1>
+
+  <!-- The flexible grid (content) -->
+  <div class="row">
+    <div style="width:30%;background-color:#fff;color:#000;" class="side">
+      <h2>Ünnepi akcióink Önre várnak</h2>
+      <h5>Lepje meg szeretteit:</h5>
+      <div>
+        <img src="/images/11.jpg" />
+      </div>
+
+    </div>
+    <div class="main">
+      <h2>CARAFA ÁGY</h2>
+      <h5>40% kedvezmény</h5>
+      <div><img class="user-image" src="/images/12.jpg" href="#" /></div>
+      <p>Varázsolja otthonába a trópusok világát, öntsön forróságot ebbe a hideg télbe...</p>
+      <br>
+      <h2>MENCHO ÁGY</h2>
+      <h5>25% kedvezmény</h5>
+        <div><img class="user-image" src="/images/13.jpg" href="#" /></div>
+      <p>Az elegancia páratlan királya garantáltan pompás ékköve lehet a szobának, Ön is élvezheti...</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <h2>&copy; Copyright 2022 MIMIX Bútoráruház</h2>
+  </div>
 </body>
 </html>
