@@ -1,4 +1,4 @@
-package com.kozepiskola;
+package com.gyakorlatbeadando;
 
 import javax.persistence.*;
 
@@ -9,10 +9,12 @@ public class Jelentkezes {
     private int id;
     private int sorrend;
     private int szerzett;
-
     @ManyToOne
     @JoinColumn(name = "jelentkezoid", referencedColumnName = "id", insertable = false, updatable = false)
     private Jelentkezo jelentkezoid;
+    @ManyToOne
+    @JoinColumn(name = "kepzesid", referencedColumnName = "id", insertable = false, updatable = false)
+    private Kepzes kepzesid;
 
     public int getId() {
         return id;
@@ -53,8 +55,4 @@ public class Jelentkezes {
     public void setKepzesid(Kepzes kepzesid) {
         this.kepzesid = kepzesid;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "kepzesid", referencedColumnName = "id", insertable = false, updatable = false)
-    private Kepzes kepzesid;
 }

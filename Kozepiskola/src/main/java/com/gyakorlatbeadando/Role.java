@@ -1,4 +1,4 @@
-package com.securityrole;
+package com.gyakorlatbeadando;
 import javax.persistence.*;
 import java.util.List;
 

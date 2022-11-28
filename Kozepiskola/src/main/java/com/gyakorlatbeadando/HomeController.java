@@ -1,8 +1,4 @@
-package com.securityrole;
-import com.kozepiskola.JelentkezesRepo;
-import com.kozepiskola.Jelentkezo;
-import com.kozepiskola.JelentkezoRepo;
-import com.kozepiskola.KepzesRepo;
+package com.gyakorlatbeadando;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +13,8 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    @Autowired
+    private UserRepository userRepo;
     @Autowired
     private JelentkezoRepo jelentkezoRepo;
     @Autowired
@@ -47,9 +45,6 @@ public class HomeController {
         model.addAttribute("reg", new User());
         return "regisztral";
     }
-
-    @Autowired
-    private UserRepository userRepo;
     @PostMapping("/regisztral_feldolgoz")
     public String Regisztráció(@ModelAttribute User user, Model model) {
         for(User felhasznalo2: userRepo.findAll())
@@ -68,16 +63,42 @@ public class HomeController {
         model.addAttribute("id", user.getId());
         return "regjo";
     }
-
     @GetMapping("/kozepiskola")
     public String kozepiskola(Model model) {
-
-        List<String[]> rowListData;
-
+        List<List<String>> rowListData = new ArrayList<List<String>>();
+        List<String> rowData;
         for(Jelentkezo jelentkezo : jelentkezoRepo.findAll()) {
-
+            rowData = new ArrayList<String>();
+            if(jelentkezo.getJelentkezesList().size() == 0) {
+                rowData.add(jelentkezo.getId()+"");
+                rowData.add(jelentkezo.getNev());
+                rowData.add(jelentkezo.getNem());
+                rowData.add("");
+                rowData.add("");
+                rowData.add("");
+                rowData.add("");
+                rowData.add("");
+                rowData.add("");
+                rowData.add("");
+                rowListData.add(rowData);
+            }
+            for(Jelentkezes jelentkezes : jelentkezo.getJelentkezesList()) {
+                rowData.add(jelentkezo.getId()+"");
+                rowData.add(jelentkezo.getNev());
+                rowData.add(jelentkezo.getNem());
+                rowData.add(jelentkezes.getId()+"");
+                rowData.add(jelentkezes.getSorrend()+"");
+                rowData.add(jelentkezes.getSzerzett()+"");
+                Kepzes kepzes = jelentkezes.getKepzesid();
+                rowData.add(kepzes.getId()+"");
+                rowData.add(kepzes.getNev());
+                rowData.add(kepzes.getFelveheto()+"");
+                rowData.add(kepzes.getMinimum()+"");
+                rowListData.add(rowData);
+                rowData = new ArrayList<String>();
+            }
         }
-
+        model.addAttribute("rowListData", rowListData);
         return "haromtablabol";
     }
 }

@@ -1,4 +1,4 @@
-package com.securityrole;
+package com.gyakorlatbeadando;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 public interface UserRepository extends CrudRepository<User, Integer>

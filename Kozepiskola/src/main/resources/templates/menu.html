@@ -14,6 +14,9 @@
         <span sec:authorize="hasRole('ROLE_USER')">
             <a th:href="@{/gallery}">Galéria</a>
         </span>
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/kozepiskola}">3 táblából adatok</a>
+        </span>
         <span sec:authorize="isAnonymous()">
             <a th:href="@{/regisztral}">Regisztrál</a>
         </span>

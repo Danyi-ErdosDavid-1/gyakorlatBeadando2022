@@ -1,4 +1,4 @@
-package com.securityrole;
+package com.gyakorlatbeadando;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

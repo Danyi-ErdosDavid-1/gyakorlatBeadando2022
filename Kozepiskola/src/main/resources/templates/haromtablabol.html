@@ -5,6 +5,39 @@
     <title>Title</title>
 </head>
 <body>
-
+    <div th:insert="menu"></div>
+    <div th:insert="welcometext"></div>
+    <h1 style="text-align: center">Csak bejelentkezett felhasználó láthatja ezt az oldalt.</h1>
+    <h1>Adatok megjelenítése a 3 táblából: jelentkezo, jelentkezes, kepzes</h1>
+    <p>Az adatbázisban a jelentkezo táblába a forrásfájl első 90 db jelentkezőjét másoltam (100. azonosítóval bezárólag,
+        mivel az azonosítószámok nem egyesével növekednek végig), míg a jelentkezes táblába a forrásfájl első 100 db rekordját másoltam.</p>
+    <p>Ezek miatt előfordulhat, hogy az első 100 db jelentkezésből több, olyan jelentkezőhöz tartozik, akik viszont nem szerepelnek a jelentkezo táblában.
+        Így ezeknél a jelentkezőknél üres értékek szerepelnek a jelentkezes és kepzes táblák mezőinél. Az ellenőrzést természetesen az összes jelentkezőre
+        elvégeztem a jelentkezo táblában (tehát hogy az adott jelentkezőhöz tartozik-e egy vagy több jelentkezés),
+        vagy persze úgy is lehetne nézni, hogy ha a jelentkezes tábla tartalmazna még több rekordot, akkor már biztosan lenne valahol olyan is, amelyik az itt,
+        jelenleg jelentkezés nélkül szereplő jelentkezőhöz tartozó jelentkezés lenne.</p>
+    <table th:border="1" th:cellspacing="2" th:cellpadding="15">
+        <thead>
+        <tr>
+            <td>Jelentkező azon.</td>
+            <td>Jelentkező neve</td>
+            <td>Nem</td>
+            <td>Jelentkezés azon.</td>
+            <td>Sorrend</td>
+            <td>Szerzett</td>
+            <td>Képzés azon.</td>
+            <td>Képzés neve</td>
+            <td>Felvehető</td>
+            <td>Minimum</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${rowListData}">
+            <td th:each="rowData : ${row}">
+                <span th:text="${rowData}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>

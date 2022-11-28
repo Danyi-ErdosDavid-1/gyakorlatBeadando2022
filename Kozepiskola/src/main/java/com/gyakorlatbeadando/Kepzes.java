@@ -1,4 +1,6 @@
-package com.kozepiskola;
+package com.gyakorlatbeadando;
+
+import com.gyakorlatbeadando.Jelentkezes;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ public class Kepzes {
     private String nev;
     private int felveheto;
     private int minimum;
+    @OneToMany(mappedBy = "kepzesid")
+    private List<Jelentkezes> jelentkezesList;
 
     public int getId() {
         return id;
@@ -54,7 +58,4 @@ public class Kepzes {
     public void setJelentkezesList(List<Jelentkezes> jelentkezesList) {
         this.jelentkezesList = jelentkezesList;
     }
-
-    @OneToMany(mappedBy = "kepzesid")
-    private List<Jelentkezes> jelentkezesList;
 }
