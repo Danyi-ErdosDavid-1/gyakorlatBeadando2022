@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +29,6 @@ public class HomeController {
     private KepzesRepo kepzesRepo;
     @Autowired
     private UzenetRepo uzenetRepo;
-
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("reg", new User());
@@ -43,7 +46,6 @@ public class HomeController {
     public String admin() {
         return "admin";
     }
-
     @GetMapping("/regisztral")
     public String greetingForm(Model model) {
         model.addAttribute("reg", new User());
@@ -111,11 +113,19 @@ public class HomeController {
         return "urlap";
     }
     @PostMapping("/eredmeny")
-    public String urlapSubmit(@Valid @ModelAttribute Uzenet uzenet, BindingResult bindingResult, Model model) {
+    public String urlapSubmit(@Valid @ModelAttribute Uzenet uzenet, BindingResult bindingResult, Model model, Principal principal) throws ParseException {
         if (bindingResult.hasErrors()) {
             return "urlap";
         }
-        Uzenet ujUzenet = new Uzenet(uzenet.getId(), uzenet.getContent());
+        String sender = "";
+        if(principal == null) {
+            sender = "Vendég";
+        } else {
+            sender = principal.getName();
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        Uzenet ujUzenet = new Uzenet(uzenet.getId(), uzenet.getContent(), dtf.format(now), sender);
         uzenetRepo.save(ujUzenet);
         model.addAttribute("eredmeny", uzenet);
         return "eredmeny";

@@ -9,9 +9,11 @@ import javax.validation.constraints.*;
 @Table(name = "uzenet")
 public class Uzenet {
     public Uzenet() {}
-    public Uzenet(int id, String content) {
+    public Uzenet(int id, String content, String date, String name) {
         this.id = id;
         this.content = content;
+        this.date = date;
+        this.name = name;
     }
     @NotNull
     @Min(2)
@@ -20,6 +22,8 @@ public class Uzenet {
     @NotNull
     @Size(min=2, max=50)
     private String content;
+    private String date;
+    private String name;
     public int getId() {
         return id;
     }
@@ -31,5 +35,17 @@ public class Uzenet {
     }
     public void setContent(String content) {
         this.content = content;
+    }
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 }

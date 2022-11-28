@@ -8,7 +8,7 @@
 <body>
   <div th:insert="menu"></div>
   <div th:insert="welcometext"></div>
-  <h1 style="text-align: center">Csak bejelentkezett felhasználó láthatja ezt az oldalt.</h1>
+  <h1 style="text-align: center">Bárki láthatja ezt az oldalt, akkor is, ha nem bejelentkezett felhasználó.</h1>
   <h1>Üzenetküldés eredménye</h1>
   <p th:text="'id: ' + ${eredmeny?.id}" />
   <p th:text="'content: ' + ${eredmeny?.content}" />

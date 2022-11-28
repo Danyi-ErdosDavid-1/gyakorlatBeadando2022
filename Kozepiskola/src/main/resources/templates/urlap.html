@@ -8,8 +8,9 @@
 <body>
   <div th:insert="menu"></div>
   <div th:insert="welcometext"></div>
-  <h1 style="text-align: center">Csak bejelentkezett felhasználó láthatja ezt az oldalt.</h1>
+  <h1 style="text-align: center">Bárki láthatja ezt az oldalt, akkor is, ha nem bejelentkezett felhasználó.</h1>
   <h1>Üzenetet küldhet</h1>
+  <h3 style="color:#ff105f;">FONTOS FIGYELMEZTETÉS: HA AZ ID ÉRTÉKE MÁR LÉTEZIK AZ ADATBÁZIS UZENET TÁBLÁJÁBAN, EZZEL AZ ÚJ ÜZENETTEL FELÜL FOGJA ÍRNI AZ ADATBÁZIS UZENET TÁBLÁJÁBAN LÉVŐ TARTALMAT (AMENNYIBEN ELKÜLDI)!</h3>
   <form action="#" th:action="@{/eredmeny}" th:object="${uzenet}" method="post">
     <p>Id: <input type="text" th:field="*{id}" /></p>
     <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
