@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>User Gallery</title>
   <link rel="stylesheet" href="/css/style.css">
@@ -9,16 +7,14 @@
 <body>
 <div th:insert="welcometext"></div>
 <h1 style="text-align: center">Aki nem Admin, de bejelentkezett felhasználó, csak az láthatja ezt az oldalt.</h1>
-<div style="background:yellow;padding:5px">
+<div style="background:#FFFF00FF;padding:5px">
   <h4 style="text-align:center">A megbízhatóság nálunk kezdődik...</h4>
 </div>
 <div class="header">
-  <h1>GALÉRIA</h1>
-  <p>Hivatásunk a <b>kényelem</b>. Nézzen szét nálunk!</p>
+    <h1>GALÉRIA</h1>
+    <p>Hivatásunk a <b>kényelem</b>. Nézzen szét nálunk!</p>
 </div>
 <div th:insert="menu"></div>
-
-<!-- The flexible grid (content) -->
 <div class="row">
     <ul>
         <li>
@@ -50,8 +46,6 @@
         </li>
   </ul>
 </div>
-
-<!-- Footer -->
 <div class="footer">
     <h2>&copy; Copyright 2022 MIMIX Bútoráruház</h2>
 </div>

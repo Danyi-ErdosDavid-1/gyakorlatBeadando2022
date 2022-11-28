@@ -13,7 +13,8 @@ import java.util.List;
 @Controller
 public class HomeController {
     @GetMapping("/")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("reg", new User());
         return "index";
     }
     @GetMapping("/home")

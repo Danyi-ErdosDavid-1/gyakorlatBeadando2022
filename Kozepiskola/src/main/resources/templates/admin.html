@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Admin Home</title>
   <link rel="stylesheet" href="/css/style.css">
@@ -9,28 +7,18 @@
 <body>
 <div th:insert="welcometext"></div>
 <h1 style="text-align: center">Csak az Admin láthatja ezt az oldalt.</h1>
-
-<!-- Note -->
-<div style="background:yellow;padding:5px">
+<div style="background:#FFFF00FF;padding:5px">
   <h4 style="text-align:center">Az adminok sokszor túl sokat dolgoznak...</h4>
 </div>
-
-<!-- Header -->
 <div class="header">
-  <h1>Admin oldal</h1>
-  <p>Tartson néha szünetet, igyon velünk egy <b>kávét</b>.</p>
+    <h1>Admin oldal</h1>
+    <p>Tartson néha szünetet, igyon velünk egy <b>kávét</b>.</p>
 </div>
-
-<!-- Navigation Bar -->
 <div th:insert="menu"></div>
-
-<!-- The flexible grid (content) -->
 <div style="position:relative;" class="row">
     <img src="/images/10.jpg" />
     <div class="admin-image-text">Coffee time...</div>
 </div>
-
-<!-- Footer -->
 <div class="footer">
     <h2>&copy; Copyright 2022 MIMIX Bútoráruház</h2>
 </div>
