@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Űrlap</title>
+</head>
+<body>
+  <div th:insert="menu"></div>
+  <div th:insert="welcometext"></div>
+  <h1 style="text-align: center">Csak bejelentkezett felhasználó láthatja ezt az oldalt.</h1>
+  <h1>Üzenetet küldhet</h1>
+  <form action="#" th:action="@{/eredmeny}" th:object="${uzenet}" method="post">
+    <p>Id: <input type="text" th:field="*{id}" /></p>
+    <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></p>
+    <p>Message: <input type="text" th:field="*{content}" /></p>
+    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+    <p><input type="submit" value="Küldés" /> <input type="reset" value="Törlés" /></p>
+  </form>
+</body>
+</html>

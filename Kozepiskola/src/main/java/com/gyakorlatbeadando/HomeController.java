@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class HomeController {
     private JelentkezesRepo jelentkezesRepoRepo;
     @Autowired
     private KepzesRepo kepzesRepo;
+    @Autowired
+    private UzenetRepo uzenetRepo;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -100,5 +104,20 @@ public class HomeController {
         }
         model.addAttribute("rowListData", rowListData);
         return "haromtablabol";
+    }
+    @GetMapping("/uzenetkuldes")
+    public String urlapForm(Model model) {
+        model.addAttribute("uzenet", new Uzenet());
+        return "urlap";
+    }
+    @PostMapping("/eredmeny")
+    public String urlapSubmit(@Valid @ModelAttribute Uzenet uzenet, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "urlap";
+        }
+        Uzenet ujUzenet = new Uzenet(uzenet.getId(), uzenet.getContent());
+        uzenetRepo.save(ujUzenet);
+        model.addAttribute("eredmeny", uzenet);
+        return "eredmeny";
     }
 }
