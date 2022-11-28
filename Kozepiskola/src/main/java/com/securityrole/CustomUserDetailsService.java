@@ -1,4 +1,4 @@
-package com.example.securityrole;
+package com.securityrole;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

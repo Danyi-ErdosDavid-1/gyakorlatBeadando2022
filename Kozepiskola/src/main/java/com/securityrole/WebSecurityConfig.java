@@ -1,4 +1,4 @@
-package com.example.securityrole;
+package com.securityrole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/resources/**", "/", "/regisztral", "/regisztral_feldolgoz", "/css/**").permitAll()
+                .antMatchers("/resources/**", "/", "/regisztral", "/regisztral_feldolgoz", "/css/**", "/kozepiskola").permitAll()
                 .antMatchers("/admin/home").hasRole("ADMIN")
                 .antMatchers("/gallery").hasRole("USER")
                 .anyRequest().authenticated()

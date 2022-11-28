@@ -1,4 +1,4 @@
-package com.example.securityrole;
+package com.securityrole;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

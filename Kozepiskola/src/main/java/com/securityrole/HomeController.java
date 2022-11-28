@@ -1,4 +1,5 @@
-package com.example.securityrole;
+package com.securityrole;
+import com.kozepiskola.Jelentkezo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -55,5 +56,10 @@ public class HomeController {
         userRepo.save(user);
         model.addAttribute("id", user.getId());
         return "regjo";
+    }
+
+    @GetMapping("/kozepiskola")
+    public String kozepiskola(Model model) {
+        return "haromtablabol";
     }
 }

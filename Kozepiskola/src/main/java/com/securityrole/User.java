@@ -1,4 +1,4 @@
-package com.example.securityrole;
+package com.securityrole;
 import javax.persistence.*;
 import java.util.List;
 
