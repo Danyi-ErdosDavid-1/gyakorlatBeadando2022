@@ -16,4 +16,36 @@ public class Jelentkezo {
 
     @OneToMany(mappedBy = "jelentkezoid")
     private List<Jelentkezes> jelentkezesList;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNev() {
+        return nev;
+    }
+
+    public void setNev(String nev) {
+        this.nev = nev;
+    }
+
+    public String getNem() {
+        return nem;
+    }
+
+    public void setNem(String nem) {
+        this.nem = nem;
+    }
+
+    public List<Jelentkezes> getJelentkezesList() {
+        return jelentkezesList;
+    }
+
+    public void setJelentkezesList(List<Jelentkezes> jelentkezesList) {
+        this.jelentkezesList = jelentkezesList;
+    }
 }

@@ -1,5 +1,9 @@
 package com.securityrole;
+import com.kozepiskola.JelentkezesRepo;
 import com.kozepiskola.Jelentkezo;
+import com.kozepiskola.JelentkezoRepo;
+import com.kozepiskola.KepzesRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,13 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    @Autowired
+    private JelentkezoRepo jelentkezoRepo;
+    @Autowired
+    private JelentkezesRepo jelentkezesRepoRepo;
+    @Autowired
+    private KepzesRepo kepzesRepo;
+
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("reg", new User());
@@ -60,6 +71,13 @@ public class HomeController {
 
     @GetMapping("/kozepiskola")
     public String kozepiskola(Model model) {
+
+        List<String[]> rowListData;
+
+        for(Jelentkezo jelentkezo : jelentkezoRepo.findAll()) {
+
+        }
+
         return "haromtablabol";
     }
 }
