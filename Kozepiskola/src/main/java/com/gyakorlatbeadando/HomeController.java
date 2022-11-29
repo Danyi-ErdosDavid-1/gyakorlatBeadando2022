@@ -19,11 +19,13 @@ import java.util.List;
 @Controller
 public class HomeController {
     @Autowired
-    private UserRepository userRepo;
-    @Autowired
     private JelentkezoRepo jelentkezoRepo;
     @Autowired
+    private UserRepository userRepo;
+    @Autowired
     private UzenetRepo uzenetRepo;
+    @Autowired
+    private VizsgazoRepo vizsgazoRepo;
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("reg", new User());
@@ -144,39 +146,39 @@ public class HomeController {
         model.addAttribute("uzenetList", finalUzenetList);
         return "uzenetmegtekintes";
     }
-    @GetMapping("/jelentkezok")
+    @GetMapping("/vizsgazok")
     @ResponseBody
-    Iterable<Jelentkezo> olvasMind() {
-        return jelentkezoRepo.findAll();
+    Iterable<Vizsgazo> olvasMind() {
+        return vizsgazoRepo.findAll();
     }
-    @GetMapping("/jelentkezok/{id}")
+    @GetMapping("/vizsgazok/{id}")
     @ResponseBody
-    Jelentkezo olvasEgy(@PathVariable int id) {
-        return jelentkezoRepo.findById(id)
-                .orElseThrow(() -> new JelentkezoNotFoundException(id));
+    Vizsgazo olvasEgy(@PathVariable int id) {
+        return vizsgazoRepo.findById(id)
+                .orElseThrow(() -> new VizsgazoNotFoundException(id));
     }
-    @PostMapping("/jelentkezok")
+    @PostMapping("/vizsgazok")
     @ResponseBody
-    Jelentkezo jelentkezoFeltolt(@RequestBody Jelentkezo ujJelentkezo) {
-        return jelentkezoRepo.save(ujJelentkezo);
+    Vizsgazo vizsgazoFeltolt(@RequestBody Vizsgazo ujVizsgazo) {
+        return vizsgazoRepo.save(ujVizsgazo);
     }
-    @PutMapping("/jelentkezok/{id}")
+    @PutMapping("/vizsgazok/{id}")
     @ResponseBody
-    Jelentkezo jelentkezoModosit(@RequestBody Jelentkezo adatJelentkezo, @PathVariable int id) {
-        return jelentkezoRepo.findById(id)
-                .map(jelentkezo -> {
-                    jelentkezo.setNev(adatJelentkezo.getNev());
-                    jelentkezo.setNem(adatJelentkezo.getNem());
-                    return jelentkezoRepo.save(jelentkezo);
+    Vizsgazo vizsgazoModosit(@RequestBody Vizsgazo adatVizsgazo, @PathVariable int id) {
+        return vizsgazoRepo.findById(id)
+                .map(a -> {
+                    a.setNev(adatVizsgazo.getNev());
+                    a.setOsztaly(adatVizsgazo.getOsztaly());
+                    return vizsgazoRepo.save(a);
                 })
                 .orElseGet(() -> {
-                    adatJelentkezo.setId(id);
-                    return jelentkezoRepo.save(adatJelentkezo);
+                    adatVizsgazo.setAzon(id);
+                    return vizsgazoRepo.save(adatVizsgazo);
                 });
     }
-    @DeleteMapping("/jelentkezok/{id}")
+    @DeleteMapping("/vizsgazok/{id}")
     @ResponseBody
-    void torolJelentkezo(@PathVariable int id) {
-        jelentkezoRepo.deleteById(id);
+    void torolVizsgazo(@PathVariable int id) {
+        vizsgazoRepo.deleteById(id);
     }
 }

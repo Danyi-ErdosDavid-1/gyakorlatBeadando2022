@@ -227,11 +227,3 @@ INSERT INTO `jelentkezes` (`jelentkezoid`, `kepzesid`, `sorrend`, `szerzett`) VA
 (63, 6, 3, 121),
 (172, 4, 1, 147),
 (148, 3, 2, 123);
-
-CREATE TABLE `uzenet` (
-  `id` int(11) NOT NULL,
-  `content` varchar(100) NOT NULL,
-  `date` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
