@@ -1,15 +1,29 @@
-CREATE DATABASE IF NOT EXISTS `feladatsec` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `feladatsec`;
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (id int(11) PRIMARY KEY, name varchar(255), email varchar(255), password varchar(255));
 
-CREATE TABLE `jelentkezo` (
-  `id` int(11) NOT NULL auto_increment,
-  `nev` varchar(100) NOT NULL,
-  `nem` varchar(100) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO users (id, name, email, password) VALUES
+(1, 'Admin', 'admin@gmail.com', '$2a$10$QEaf3I.eLiZC4F4pDnqmC.sTysFlJ59wgROmw3ATxceFs/wgg0LvK'),
+(2, 'User', 'user@gmail.com', '$2a$10$exVjZOnYQ3oFdNTFP7qVHOoL8K2XhKpWXY3r8duw8v9pTNxmC0qbm');
 
-INSERT INTO `jelentkezo` (`id`, `nev`, `nem`) VALUES
+DROP TABLE IF EXISTS roles;
+CREATE TABLE roles (id int(11) PRIMARY KEY, name varchar(255));
 
+INSERT INTO roles (id, name) VALUES
+(1, 'ROLE_ADMIN'),
+(2, 'ROLE_USER'),
+(3, 'ROLE_VISITOR');
+
+DROP TABLE IF EXISTS user_role;
+CREATE TABLE user_role (user_id int(11) PRIMARY KEY, role_id int(11) UNIQUE);
+
+INSERT INTO user_role (user_id, role_id) VALUES
+(1, 1),
+(2, 2);
+
+DROP TABLE IF EXISTS jelentkezo;
+CREATE TABLE jelentkezo (id int(11) PRIMARY KEY, nev varchar(100), nem varchar(100));
+
+INSERT INTO jelentkezo (id, nev, nem) VALUES
 (1, 'Skvar Tamás', 'f'),
 (2, 'Tatár István', 'f'),
 (3, 'Siket Karen', 'l'),
@@ -101,15 +115,10 @@ INSERT INTO `jelentkezo` (`id`, `nev`, `nem`) VALUES
 (99, 'Dócz Károly', 'f'),
 (100, 'Halász Norbert', 'f');
 
-CREATE TABLE `kepzes` (
-  `id` int(11) NOT NULL auto_increment,
-  `nev` varchar(100) NOT NULL,
-  `felveheto` int(11) NOT NULL,
-  `minimum` int(11) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS kepzes;
+CREATE TABLE kepzes (id int(11) SERIAL PRIMARY KEY, nev varchar(100), felveheto int(11), minimum int(11));
 
-INSERT INTO `kepzes` (`nev`, `felveheto`, minimum) VALUES
+INSERT INTO kepzes (nev, felveheto, minimum) VALUES
 ('francia', 16, 140),
 ('angol', 30, 150),
 ('matematika', 16, 160),
@@ -117,16 +126,10 @@ INSERT INTO `kepzes` (`nev`, `felveheto`, minimum) VALUES
 ('környezetvédelmi', 16, 130),
 ('közgazdasági', 30, 130);
 
-CREATE TABLE `jelentkezes` (
-  `id` int(11) NOT NULL auto_increment,
-  `jelentkezoid` int(11) NOT NULL,
-  `kepzesid` int(11) NOT NULL,
-  `sorrend` int(11) NOT NULL,
-  `szerzett` int(11) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS jelentkezes;
+CREATE TABLE jelentkezes (id int(11) SERIAL PRIMARY KEY, jelentkezoid int(11), kepzesid int(11), sorrend int(11), szerzett int(11));
 
-INSERT INTO `jelentkezes` (`jelentkezoid`, `kepzesid`, `sorrend`, `szerzett`) VALUES
+INSERT INTO jelentkezes (jelentkezoid, kepzesid, sorrend, szerzett) VALUES
 (212, 2, 1, 152),
 (353, 5, 2, 123),
 (278, 3, 1, 154),
@@ -227,3 +230,41 @@ INSERT INTO `jelentkezes` (`jelentkezoid`, `kepzesid`, `sorrend`, `szerzett`) VA
 (63, 6, 3, 121),
 (172, 4, 1, 147),
 (148, 3, 2, 123);
+
+DROP TABLE IF EXISTS uzenet;
+CREATE TABLE uzenet (id int(11) SERIAL PRIMARY KEY, content varchar(100), date varchar(100), name varchar(100));
+
+DROP TABLE IF EXISTS vizsgazodiak;
+CREATE TABLE vizsgazodiak (azon int(11) SERIAL PRIMARY KEY, nev varchar(50), osztaly varchar(50));
+
+INSERT INTO vizsgazodiak (nev, osztaly) VALUES
+('Borbás Ferenc', '11/B'),
+('Sima Dezső', '11/C'),
+('Lajos Lajos', '11/C'),
+('Lant János', '12/D'),
+('Fogó Róbert', '11/C'),
+('Pisty Mihály', '12/D'),
+('Déri Béla', '11/B'),
+('Nikk Gábor', '12/B'),
+('Budai Tamás', '12/A'),
+('Bog Aladár', '12/A'),
+('Bálint Gábor', '11/B'),
+('Fekete Zsolt', '12/E'),
+('Kisó Ábel', '10/D'),
+('Hámori Frigyes', '10/C'),
+('Kosztolányi András', '11/B'),
+('Sebes Vilmos', '11/A'),
+('Pölös Ágost', '12/A'),
+('Szűcs Lóránt', '12/D'),
+('Weisz Richárd', '11/B'),
+('Tóth Zoltán', '10/E'),
+('Pók Béla', '12/E'),
+('Stabb Ottó', '9/A'),
+('Füst Szabolcs', '12/C'),
+('Budai Ferenc', '9/A'),
+('Szósz György', '9/A'),
+('Fenyves Attila', '12/B'),
+('Ilkei Béla', '11/B'),
+('Eszes Győző', '12/C'),
+('Izsó Gusztáv', '12/C'),
+('Mind Ákos', '9/C');
