@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -129,5 +130,24 @@ public class HomeController {
         uzenetRepo.save(ujUzenet);
         model.addAttribute("eredmeny", uzenet);
         return "eredmeny";
+    }
+    @GetMapping("/uzenetmegtekintes")
+    public String uzenetmegtekintes(Model model) {
+        List<Uzenet> uzenetList = (List<Uzenet>) uzenetRepo.findAll();
+        List<String> dateStringList = new ArrayList<String>();
+        for(Uzenet uzenet : uzenetList)
+            dateStringList.add(uzenet.getDate());
+        List<Uzenet> finalUzenetList = new ArrayList<Uzenet>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        Collections.sort(dateStringList, (s1, s2) -> LocalDateTime.parse(s2, formatter).
+                compareTo(LocalDateTime.parse(s1, formatter)));
+        dateStringList.forEach(dateString -> {
+            uzenetList.forEach(uzenet -> {
+                if(uzenet.getDate().equals(dateString))
+                    finalUzenetList.add(uzenet);
+            });
+        });
+        model.addAttribute("uzenetList", finalUzenetList);
+        return "uzenetmegtekintes";
     }
 }

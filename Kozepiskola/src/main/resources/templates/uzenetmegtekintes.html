@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eddigi üzenetek</title>
+</head>
+<body>
+<div th:insert="menu"></div>
+<div th:insert="welcometext"></div>
+<h1 style="text-align: center">Bárki láthatja ezt az oldalt, akkor is, ha nem bejelentkezett felhasználó.</h1>
+<div th:if="${#lists.isEmpty(uzenetList)}">
+  <h2>Sajnos nincs még üzenet az adatbázis uzenet táblájában.</h2>
+</div>
+<table th:border="1" th:cellspacing="2" th:cellpadding="15">
+  <thead>
+  <tr>
+    <td>Üzenet ID</td>
+    <td>Tartalom</td>
+    <td>Dátum</td>
+    <td>Küldő</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="uzenet : ${uzenetList}">
+    <td th:text="${uzenet.id}" />
+    <td th:text="${uzenet.content}" />
+    <td th:text="${uzenet.date}" />
+    <td th:text="${uzenet.name}" />
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
