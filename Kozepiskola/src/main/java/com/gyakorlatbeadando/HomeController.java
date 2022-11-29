@@ -5,9 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -24,10 +22,6 @@ public class HomeController {
     private UserRepository userRepo;
     @Autowired
     private JelentkezoRepo jelentkezoRepo;
-    @Autowired
-    private JelentkezesRepo jelentkezesRepoRepo;
-    @Autowired
-    private KepzesRepo kepzesRepo;
     @Autowired
     private UzenetRepo uzenetRepo;
     @GetMapping("/")
@@ -149,5 +143,40 @@ public class HomeController {
         });
         model.addAttribute("uzenetList", finalUzenetList);
         return "uzenetmegtekintes";
+    }
+    @GetMapping("/jelentkezok")
+    @ResponseBody
+    Iterable<Jelentkezo> olvasMind() {
+        return jelentkezoRepo.findAll();
+    }
+    @GetMapping("/jelentkezok/{id}")
+    @ResponseBody
+    Jelentkezo olvasEgy(@PathVariable int id) {
+        return jelentkezoRepo.findById(id)
+                .orElseThrow(() -> new JelentkezoNotFoundException(id));
+    }
+    @PostMapping("/jelentkezok")
+    @ResponseBody
+    Jelentkezo jelentkezoFeltolt(@RequestBody Jelentkezo ujJelentkezo) {
+        return jelentkezoRepo.save(ujJelentkezo);
+    }
+    @PutMapping("/jelentkezok/{id}")
+    @ResponseBody
+    Jelentkezo jelentkezoModosit(@RequestBody Jelentkezo adatJelentkezo, @PathVariable int id) {
+        return jelentkezoRepo.findById(id)
+                .map(jelentkezo -> {
+                    jelentkezo.setNev(adatJelentkezo.getNev());
+                    jelentkezo.setNem(adatJelentkezo.getNem());
+                    return jelentkezoRepo.save(jelentkezo);
+                })
+                .orElseGet(() -> {
+                    adatJelentkezo.setId(id);
+                    return jelentkezoRepo.save(adatJelentkezo);
+                });
+    }
+    @DeleteMapping("/jelentkezok/{id}")
+    @ResponseBody
+    void torolJelentkezo(@PathVariable int id) {
+        jelentkezoRepo.deleteById(id);
     }
 }
