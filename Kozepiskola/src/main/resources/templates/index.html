@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,8 +7,18 @@
 <title>Login Form</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body style="background-color:#d1d5c3;">
     <div th:insert="menu"></div>
-    <h1 style="text-align: center">Bárki láthatja ezt az oldalt, akkor is, ha nem bejelentkezett felhasználó.</h1>
+    <h1 style="text-align:center;margin-bottom:100px;">Bárki láthatja ezt az oldalt, akkor is, ha nem bejelentkezett felhasználó.</h1>
+    <div id="homepageDiv">
+        <div style="padding:50px;color:#fff;">
+            <h1 style="text-align:center;margin-bottom:50px;">MIMIX Bútoráruház</h1>
+            <div style="margin-left:110px;">
+                <p>1. Regisztráljon hozzánk</p>
+                <p>2. Lépjen be fiókjába</p>
+                <p>3. Ismerjen meg minket</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

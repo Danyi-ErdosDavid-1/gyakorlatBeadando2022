@@ -50,15 +50,18 @@ public class HomeController {
     }
     @PostMapping("/regisztral_feldolgoz")
     public String Regisztráció(@ModelAttribute User user, Model model) {
-        for(User felhasznalo2: userRepo.findAll())
-            if(felhasznalo2.getEmail().equals(user.getEmail())){
+        for(User felhasznalo: userRepo.findAll())
+            if(felhasznalo.getEmail().equals(user.getEmail())){
                 model.addAttribute("uzenet", "A regisztrációs email már foglalt!");
                 return "reghiba";
             }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setName(user.getName());
+        user.setEmail(user.getEmail());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = new Role();
-        role.setId(3); role.setName("ROLE_USER");
+        role.setId(2);
+        role.setName("ROLE_USER");
         List<Role> rolelist = new ArrayList<Role>();
         rolelist.add(role);
         user.setRoles(rolelist);
