@@ -14,7 +14,7 @@ INSERT INTO roles (id, name) VALUES
 (3, 'ROLE_VISITOR');
 
 DROP TABLE IF EXISTS user_role;
-CREATE TABLE user_role (user_id int(11) PRIMARY KEY, role_id int(11) UNIQUE);
+CREATE TABLE user_role (user_id int(11) PRIMARY KEY, role_id int(11));
 
 INSERT INTO user_role (user_id, role_id) VALUES
 (1, 1),
