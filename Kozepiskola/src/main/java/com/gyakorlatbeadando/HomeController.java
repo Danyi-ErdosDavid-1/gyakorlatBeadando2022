@@ -5,9 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -15,20 +13,19 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
 public class HomeController {
     @Autowired
-    private UserRepository userRepo;
-    @Autowired
     private JelentkezoRepo jelentkezoRepo;
     @Autowired
-    private JelentkezesRepo jelentkezesRepoRepo;
-    @Autowired
-    private KepzesRepo kepzesRepo;
+    private UserRepository userRepo;
     @Autowired
     private UzenetRepo uzenetRepo;
+    @Autowired
+    private VizsgazoRepo vizsgazoRepo;
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("reg", new User());
@@ -53,15 +50,18 @@ public class HomeController {
     }
     @PostMapping("/regisztral_feldolgoz")
     public String Regisztráció(@ModelAttribute User user, Model model) {
-        for(User felhasznalo2: userRepo.findAll())
-            if(felhasznalo2.getEmail().equals(user.getEmail())){
+        for(User felhasznalo: userRepo.findAll())
+            if(felhasznalo.getEmail().equals(user.getEmail())){
                 model.addAttribute("uzenet", "A regisztrációs email már foglalt!");
                 return "reghiba";
             }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setName(user.getName());
+        user.setEmail(user.getEmail());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = new Role();
-        role.setId(3); role.setName("ROLE_USER");
+        role.setId(2);
+        role.setName("ROLE_USER");
         List<Role> rolelist = new ArrayList<Role>();
         rolelist.add(role);
         user.setRoles(rolelist);
@@ -129,5 +129,59 @@ public class HomeController {
         uzenetRepo.save(ujUzenet);
         model.addAttribute("eredmeny", uzenet);
         return "eredmeny";
+    }
+    @GetMapping("/uzenetmegtekintes")
+    public String uzenetmegtekintes(Model model) {
+        List<Uzenet> uzenetList = (List<Uzenet>) uzenetRepo.findAll();
+        List<String> dateStringList = new ArrayList<String>();
+        for(Uzenet uzenet : uzenetList)
+            dateStringList.add(uzenet.getDate());
+        List<Uzenet> finalUzenetList = new ArrayList<Uzenet>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        Collections.sort(dateStringList, (s1, s2) -> LocalDateTime.parse(s2, formatter).
+                compareTo(LocalDateTime.parse(s1, formatter)));
+        dateStringList.forEach(dateString -> {
+            uzenetList.forEach(uzenet -> {
+                if(uzenet.getDate().equals(dateString))
+                    finalUzenetList.add(uzenet);
+            });
+        });
+        model.addAttribute("uzenetList", finalUzenetList);
+        return "uzenetmegtekintes";
+    }
+    @GetMapping("/vizsgazok")
+    @ResponseBody
+    Iterable<Vizsgazo> olvasMind() {
+        return vizsgazoRepo.findAll();
+    }
+    @GetMapping("/vizsgazok/{id}")
+    @ResponseBody
+    Vizsgazo olvasEgy(@PathVariable int id) {
+        return vizsgazoRepo.findById(id)
+                .orElseThrow(() -> new VizsgazoNotFoundException(id));
+    }
+    @PostMapping("/vizsgazok")
+    @ResponseBody
+    Vizsgazo vizsgazoFeltolt(@RequestBody Vizsgazo ujVizsgazo) {
+        return vizsgazoRepo.save(ujVizsgazo);
+    }
+    @PutMapping("/vizsgazok/{id}")
+    @ResponseBody
+    Vizsgazo vizsgazoModosit(@RequestBody Vizsgazo adatVizsgazo, @PathVariable int id) {
+        return vizsgazoRepo.findById(id)
+                .map(a -> {
+                    a.setNev(adatVizsgazo.getNev());
+                    a.setOsztaly(adatVizsgazo.getOsztaly());
+                    return vizsgazoRepo.save(a);
+                })
+                .orElseGet(() -> {
+                    adatVizsgazo.setAzon(id);
+                    return vizsgazoRepo.save(adatVizsgazo);
+                });
+    }
+    @DeleteMapping("/vizsgazok/{id}")
+    @ResponseBody
+    void torolVizsgazo(@PathVariable int id) {
+        vizsgazoRepo.deleteById(id);
     }
 }

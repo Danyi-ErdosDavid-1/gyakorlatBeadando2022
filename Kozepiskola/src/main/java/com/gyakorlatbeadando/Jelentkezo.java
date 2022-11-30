@@ -1,7 +1,5 @@
 package com.gyakorlatbeadando;
 
-import com.gyakorlatbeadando.Jelentkezes;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -17,7 +15,6 @@ public class Jelentkezo {
     private String nem;
     @OneToMany(mappedBy = "jelentkezoid")
     private List<Jelentkezes> jelentkezesList;
-
     public int getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package com.gyakorlatbeadando;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,7 +24,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/resources/**", "/", "/regisztral", "/regisztral_feldolgoz", "/css/**", "/kozepiskola", "/uzenetkuldes", "/eredmeny").permitAll()
+                .antMatchers("/resources/**", "/", "/regisztral", "/regisztral_feldolgoz", "/css/**", "/kozepiskola", "/uzenetkuldes", "/eredmeny",
+                        "/uzenetmegtekintes", "/vizsgazok/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/vizsgazok/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/vizsgazok/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/vizsgazok/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/vizsgazok/**").permitAll()
                 .antMatchers("/admin/home").hasRole("ADMIN")
                 .antMatchers("/gallery").hasRole("USER")
                 .anyRequest().authenticated()
@@ -33,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").permitAll()
                 .and()
+                .cors().and().
+                csrf().disable()
                 .exceptionHandling();
     }
 }
